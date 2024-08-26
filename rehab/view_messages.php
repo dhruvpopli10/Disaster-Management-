@@ -21,7 +21,10 @@ if ($conn->connect_error) {
 }
 
 // Fetch public messages
-$query = "SELECT Institute, Title, Message, DatePosted FROM publicmessage ORDER BY DatePosted DESC";
+$query = "SELECT p.Title, p.Message, p.DatePosted, u.username AS InstituteName 
+          FROM publicmessage p
+          JOIN users u ON p.Institute = u.id
+          ORDER BY p.DatePosted DESC";
 $result = $conn->query($query);
 
 ?>
@@ -71,24 +74,22 @@ $result = $conn->query($query);
         }
     </style>
 </head>
-<?php
-include('navbar.php');
-?>
 <body>
     <div class="container">
         <h2>Public Messages</h2>
+        
         <table>
             <tr>
-                <th>Institute</th>
                 <th>Title</th>
                 <th>Message</th>
+                <th>Institute</th>
                 <th>Date Posted</th>
             </tr>
             <?php while ($row = $result->fetch_assoc()): ?>
             <tr>
-                <td><?php echo htmlspecialchars($row['Institute']); ?></td>
                 <td><?php echo htmlspecialchars($row['Title']); ?></td>
                 <td><?php echo htmlspecialchars($row['Message']); ?></td>
+                <td><?php echo htmlspecialchars($row['InstituteName']); ?></td>
                 <td><?php echo htmlspecialchars($row['DatePosted']); ?></td>
             </tr>
             <?php endwhile; ?>

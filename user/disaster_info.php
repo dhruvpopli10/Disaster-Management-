@@ -92,6 +92,7 @@ $result = $conn->query($query);
                 <th>Description</th>
                 <th>Date Occurred</th>
                 <th>Location</th>
+                <th>Actions</th>
             </tr>
             <?php while ($row = $result->fetch_assoc()): ?>
             <tr>
@@ -99,6 +100,8 @@ $result = $conn->query($query);
                 <td><?php echo htmlspecialchars($row['Description']); ?></td>
                 <td><?php echo htmlspecialchars($row['DateOccured']); ?></td>
                 <td><?php echo htmlspecialchars($row['Location']); ?></td>
+                <td><a href="add_relief_info.php">Help Financial</a></td>
+        
             </tr>
             <?php endwhile; ?>
         </table>

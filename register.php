@@ -127,8 +127,8 @@ include('navbar.php');
 
         <label for="usertype">User Type:</label>
         <select id="usertype" name="usertype" required>
-            <option value="Rehabilitation Institutes">Rehabilitation Institutes</option>
-            <option value="General User">General User</option>
+            <option value="Rehabilitation Institutes">General User</option>
+            <option value="General User">Volunteer</option>
         </select>
 
         <button type="submit">Register</button>

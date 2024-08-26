@@ -126,18 +126,27 @@ $conn->close();
 </head>
 <body>
 
-<ul class="navbar">
-    <li><a href="general_user_home.php">Home</a></li>
-    <li><a href="register.php">Update Profile</a></li>
-    <li><a href="relief_info.php">Check Relief Information</a></li>
-    <li><a href="disaster_info.php">Check Disaster Information</a></li>
-    <li><a href="view_messages.php">View Public Message</a></li>
-    <li><a href="logout.php">Logout</a></li>
-</ul>
-
+<?php
+include('navbar.php');
+?>
 <div class="container">
     <h2>Welcome, <?php echo htmlspecialchars($username); ?>!</h2>
-    <p>You are logged in as a <strong><?php echo htmlspecialchars($usertype); ?></strong>.</p>
+    <p>You are logged in as a <strong>Volunteer!!</strong>.</p>
+</div>
+<div class="container">
+    <h2>Latest Public Messages</h2>
+    <div class="card-row">
+        <?php while ($row = $result_public_message->fetch_assoc()) { ?>
+        <div class="card">
+            <h3><?php echo htmlspecialchars($row['Title']); ?></h3>
+            <p><?php echo htmlspecialchars($row['Message']); ?></p>
+            <p><strong>Date Posted:</strong> <?php echo htmlspecialchars($row['DatePosted']); ?></p>
+        </div>
+        <?php } ?>
+    </div>
+    <?php if ($total_public_message > 3) { ?>
+        <a href="view_messages.php" class="view-more">View More</a>
+    <?php } ?>
 </div>
 
 <div class="container">
@@ -156,21 +165,6 @@ $conn->close();
     <?php } ?>
 </div>
 
-<div class="container">
-    <h2>Latest Public Messages</h2>
-    <div class="card-row">
-        <?php while ($row = $result_public_message->fetch_assoc()) { ?>
-        <div class="card">
-            <h3><?php echo htmlspecialchars($row['Title']); ?></h3>
-            <p><?php echo htmlspecialchars($row['Message']); ?></p>
-            <p><strong>Date Posted:</strong> <?php echo htmlspecialchars($row['DatePosted']); ?></p>
-        </div>
-        <?php } ?>
-    </div>
-    <?php if ($total_public_message > 3) { ?>
-        <a href="view_messages.php" class="view-more">View More</a>
-    <?php } ?>
-</div>
 
 <a href="logout.php" class="logout">Logout</a>
 

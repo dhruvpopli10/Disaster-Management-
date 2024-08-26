@@ -101,7 +101,8 @@ include('navbar.php');
         <td><?php echo htmlspecialchars($row['DateOccured']); ?></td>
         <td><?php echo htmlspecialchars($row['Location']); ?></td>
         <td>
-            <a href="edit_disaster.php?id=<?php echo $row['DisasterID']; ?>">Edit</a> |
+            <a href="add_relief_info.php"> Help</a>
+
             <a href="manage_disasters.php?delete=<?php echo $row['DisasterID']; ?>" onclick="return confirm('Are you sure you want to delete this disaster information?');">Delete</a>
         </td>
     </tr>
