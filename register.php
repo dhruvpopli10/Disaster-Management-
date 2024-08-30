@@ -103,7 +103,94 @@ $conn->close();
 <?php
 include('navbar.php');
 ?>
+<style>
+        body {
+    font-family: Arial, sans-serif;
+    background-image: url('back2.jpg'); /* Replace with your image URL */
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+}
 
+.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(51, 51, 51, 0.8); /* Make navbar semi-transparent */
+    padding: 10px 0;
+    margin: 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar li {
+    margin: 0 15px;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.9); /* Make container semi-transparent */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin: 100px auto 0; /* Adjust margin-top to account for the fixed navbar */
+}
+
+.container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.container input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.container button:hover {
+    background-color: #218838;
+}
+
+.message {
+    color: red;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+    </style>
 <div class="container">
     <h2>User Registration</h2>
     <?php if ($message): ?>

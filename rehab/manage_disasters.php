@@ -81,8 +81,113 @@ if (!$result) {
 <body>
 <?php
 include('navbar.php');
-?>
-<h2>Rehab - Manage Disasters</h2>
+?><style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+    padding: 10px 0;
+    list-style: none;
+    margin: 0;
+}
+.navbar li {
+    margin: 0 15px;
+}
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 80%;
+    margin: 20px auto;
+}
+.dashboard-item {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+.dashboard-item h2 {
+    margin: 0;
+    color: #333;
+}
+.dashboard-item p {
+    font-size: 24px;
+    color: #007bff;
+}
+.logout {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+.card{
+    background-color: #fff;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard {
+    width: 80%;
+    margin: 50px auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.card {
+    background-color: #fff;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+.card p {
+    font-size: 24px;
+    color: #333;
+}
+
+
+</style>
+
+<h2 style="text-align: center;">Manage Disasters</h2>
 
 <table>
     <tr>

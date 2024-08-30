@@ -64,12 +64,36 @@ $conn->close();
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding: 10px 0;
+            list-style: none;
+            margin: 0;
+        }
+
+        .navbar li {
+            margin: 0 15px;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            min-height: calc(100vh - 60px); /* Subtract navbar height */
         }
+
         .container {
             background-color: #fff;
             padding: 20px;
@@ -78,13 +102,18 @@ $conn->close();
             width: 400px;
             text-align: center;
         }
+
         .container h2 {
             margin-bottom: 20px;
+            color: #333;
         }
+
         .container form {
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
+
         .container form input[type="text"],
         .container form textarea {
             width: 100%;
@@ -93,6 +122,7 @@ $conn->close();
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+
         .container form button {
             padding: 10px;
             background-color: #007bff;
@@ -101,39 +131,81 @@ $conn->close();
             font-size: 16px;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
         .container form button:hover {
             background-color: #0056b3;
         }
+
         .message {
             color: green;
             margin-bottom: 20px;
         }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        ul li a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .logout {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
-<?php
-include('navbar.php');
-?>
-<div class="container">
-    <h2>Post Public Message</h2>
 
-    <?php if ($message): ?>
-        <p class="message"><?php echo htmlspecialchars($message); ?></p>
-    <?php endif; ?>
+<?php include('navbar.php'); ?>
 
-    <form action="" method="POST">
-        <input type="text" name="title" placeholder="Message Title" required>
-        <textarea name="message" rows="4" placeholder="Your message..." required></textarea>
-        <button type="submit">Post Message</button>
-    </form>
+<div class="container-wrapper">
+    <div class="container">
+        <h2>Post Public Message</h2>
+
+        <?php if ($message): ?>
+            <p class="message"><?php echo htmlspecialchars($message); ?></p>
+        <?php endif; ?>
+
+        <form action="" method="POST">
+            <input type="text" name="title" placeholder="Message Title" required>
+            <textarea name="message" rows="4" placeholder="Your message..." required></textarea>
+            <button type="submit">Post Message</button>
+        </form>
+
+        <ul>
+            <li><a href="view_messages.php">View Messages</a></li>
+            <li><a href="rehabilitation_home.php">Back to Home</a></li>
+        </ul>
+
+        <a href="logout.php" class="logout">Logout</a>
+    </div>
 </div>
-<ul>
-    <li><a href="view_messages.php">View Messages </a></li>
-    <li><a href="rehabilitation_home.php">Back to Home</a>
-    </li>
-</ul>
-<a href="logout.php" style="display: inline-block; margin: 20px; padding: 10px 20px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 4px;">Logout</a>
 
 </body>
 </html>

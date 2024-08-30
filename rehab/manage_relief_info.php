@@ -1,6 +1,16 @@
 <?php
 session_start();
 
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Get the user's details from the session
+$username = $_SESSION['username'];
+$usertype = $_SESSION['usertype'];
+
 // Database connection
 $host = 'localhost';
 $db   = 'disaster_db';
@@ -14,32 +24,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle relief information deletion
-if (isset($_GET['delete'])) {
-    $relief_id = $_GET['delete'];
-
-    // SQL query to delete the relief information
-    $stmt = $conn->prepare("DELETE FROM Reliefinformation WHERE ReliefID = ?");
-    if (!$stmt) {
-        die("Prepare failed: " . $conn->error);
-    }
-    $stmt->bind_param("i", $relief_id);
-    if ($stmt->execute()) {
-        echo "<p>Relief information deleted successfully.</p>";
-    } else {
-        echo "<p>Error deleting relief information: " . $stmt->error . "</p>";
-    }
-    $stmt->close();
-}
-
-// Fetch all relief information
-$query = "SELECT ReliefID, Title, description, date_granted, Amount FROM Reliefinformation";
+// Fetch relief information
+$query = "SELECT Title, Description, date_granted, Amount FROM ReliefInformation";
 $result = $conn->query($query);
 
 if (!$result) {
     die("Query failed: " . $conn->error);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -47,16 +38,32 @@ if (!$result) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rehab - Manage Relief Information</title>
+    <title>Relief Information</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background-color: #fff;
             padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin-top: 20px;
+        }
+        .container h2 {
+            margin-bottom: 20px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px;
         }
         table, th, td {
             border: 1px solid #ddd;
@@ -78,45 +85,110 @@ if (!$result) {
         }
     </style>
 </head>
-<body>
 <?php
 include('navbar.php');
 ?>
-<h2>Rehab - Manage Relief Information</h2>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding: 10px 0;
+            list-style: none;
+            margin: 0;
+        }
+        .navbar li {
+            margin: 0 15px;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: 20px auto;
+        }
+        .card-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            flex: 1 1 calc(33% - 20px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .card h3 {
+            margin-top: 0;
+        }
+        .card p {
+            margin: 5px 0;
+        }
+        .view-more {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .view-more a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .logout {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+    </style>
 
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Date Granted</th>
-        <th>Amount</th>
-        <th>Actions</th>
-    </tr>
-    <?php if ($result->num_rows > 0): ?>
-        <?php while ($row = $result->fetch_assoc()): ?>
-        <tr>
-            <td><?php echo htmlspecialchars($row['ReliefID']); ?></td>
-            <td><?php echo htmlspecialchars($row['Title']); ?></td>
-            <td><?php echo htmlspecialchars($row['description']); ?></td>
-            <td><?php echo htmlspecialchars($row['date_granted']); ?></td>
-            <td><?php echo htmlspecialchars($row['Amount']); ?></td>
-            <td>
-                <a href="edit_relief_info.php?id=<?php echo $row['ReliefID']; ?>">Edit</a> |
-                <a href="manage_relief_info.php?delete=<?php echo $row['ReliefID']; ?>" onclick="return confirm('Are you sure you want to delete this relief information?');">Delete</a>
-            </td>
-        </tr>
-        <?php endwhile; ?>
-    <?php else: ?>
-        <tr>
-            <td colspan="6">No relief information found.</td>
-        </tr>
-    <?php endif; ?>
-</table>
+
+
+<body>
+    <div class="container">
+        <h2>Relief Information</h2>
+        
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date Granted</th>
+                <th>Amount</th>
+            </tr>
+            <?php while ($row = $result->fetch_assoc()): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($row['Title']); ?></td>
+                <td><?php echo htmlspecialchars($row['Description']); ?></td>
+                <td><?php echo htmlspecialchars($row['date_granted']); ?></td>
+                <td><?php echo htmlspecialchars($row['Amount']); ?></td>
+            </tr>
+            <?php endwhile; ?>
+        </table>
+        
+    </div>
+
+    <a href="rehabilitation_home.php" style="display: inline-block; margin: 20px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">Back to Home</a>
+    <a href="logout.php" style="display: inline-block; margin: 20px; padding: 10px 20px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 4px;">Logout</a>
+</body>
+</html>
 
 <?php
 $conn->close();
 ?>
-
-</body>
-</html>
